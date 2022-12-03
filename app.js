@@ -2,9 +2,9 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose') // 載入 mongoose
-const URL = require("./models/URL")
-const shortenURL = require("./controllers/shortenURL")
-const bodyParser = require('body-parser') 
+const URL = require('./models/URL')
+const shortenURL = require('./controllers/shortenURL')
+const bodyParser = require('body-parser')
 
 // 加入這段 code, 僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
@@ -39,13 +39,14 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
   if (!req.body.url) return res.redirect('/')
   const originURL = req.body.url
-  URL.findOne({ originURL})
+  const shortURL = shortenURL(5)
+  URL.findOne({ originURL })
     .lean()
     .then(data => {
-      if(!data){
-        const shortURL = shortenURL()
-        URL.create({originURL, shortURL})
+      if (!data) {
+        return URL.create({ originURL, shortURL })
       }
+      console.log(data)
       return data
     })
     .then(data => {
@@ -55,12 +56,12 @@ app.post('/', (req, res) => {
 })
 
 //設定短網址連結
-app.get('/:shortURL', (req,res) => {
+app.get('/:shortURL', (req, res) => {
   const shortURL = req.params.shortURL
-  URL.findOne({shortURL})
+  URL.findOne({ shortURL })
     .lean()
     .then(data => {
-      if(!data){
+      if (!data) {
         res.redirect('/')
       } else {
         res.redirect(`${data.originURL}`)

@@ -1,9 +1,8 @@
 const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
-const number = 5
 
 function shortenURL(number){
   let result = ''
-   for (let i = 0; i <= number; i++){
+   for (let i = 0; i < number; i++){
      const index = Math.floor(Math.random() * letters.length)
      const letter = letters[index]
      result += letter

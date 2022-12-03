@@ -1,7 +1,19 @@
 {{#if shortURL}}
 <div class="result">
   <h3>Success! Please use this link:</h3>
-  <p id="generatedURL">{{shortURL}}</p>
+  <p id="generatedURL">http://localhost:3000/{{shortURL}}</p>
 </div>
-<button class="copy" onclick="copy()">Copy</button>
+<button class="copy_btn" onclick="copyText()">Copy</button>
+
+<script>
+  //設定節點
+  const generatedURL = document.querySelector('#generatedURL')
+  const copyBtn = document.querySelector('.copy_btn')
+
+  //設置copy button監聽器
+  copyBtn.addEventListener('click', function copyText(){
+    navigator.clipboard.writeText(generatedURL.innerText)
+    alert('已複製目標網址')
+  })
+</script>
 {{/if}}

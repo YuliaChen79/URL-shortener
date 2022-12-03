@@ -1,9 +1,8 @@
-{{#if shortURL}}
-<div class="result">
+<div class="container text-center mt-3 result">
   <h3>Success! Please use this link:</h3>
   <p id="generatedURL">http://localhost:3000/{{shortURL}}</p>
+  <button class="copy_btn" onclick="copyText()">Copy</button>
 </div>
-<button class="copy_btn" onclick="copyText()">Copy</button>
 
 <script>
   //設定節點
@@ -16,4 +15,3 @@
     alert('已複製目標網址')
   })
 </script>
-{{/if}}

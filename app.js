@@ -51,6 +51,22 @@ app.post('/', (req, res) => {
     .then(data => {
       res.render('shortURL', { shortURL: data.shortURL })
     })
+    .catch(err => console.log('error'))
+})
+
+//設定短網址連結
+app.get('/:shortURL', (req,res) => {
+  const shortURL = req.params.shortURL
+  URL.findOne({shortURL})
+    .lean()
+    .then(data => {
+      if(!data){
+        res.redirect('/')
+      } else {
+        res.redirect(`${data.originURL}`)
+      }
+    })
+    .catch(err => console.log('error'))
 })
 
 // 設定 port 3000
